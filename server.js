@@ -22,8 +22,7 @@ app.use(methodOverride('X-HTTP-Method-Override'))
 
 router = require('./app/routes.js')
 app.use('/', router)
-// data models
-var githubUserModel = require('./app/models/github_user')
+
 // listen
 app.listen(port)
 console.log("listening on port " + port)
