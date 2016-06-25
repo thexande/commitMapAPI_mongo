@@ -1,0 +1,56 @@
+<br /><br /><br /><br />
+<legend class="text-center"> 
+  <h3>Select repositories to add to your watch list!</h3>
+</legend>
+<div class="col-md-6">
+  <div class="panel panel-tomato">
+    <div class="panel-heading text-center"><span>Repositories available</span></div>
+    <div class="panel-body">
+      <div class="panel-body">
+        <table st-table="reposFromGithubData" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Add To Watch</th>
+              <th>Repository				</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="repo in availableUserRepoIds">
+              <td> 
+                <input type="button" value="Add" ng-click="addRepoToWatch(repo)" class="btn btn-tomato"/>
+              </td>
+              <td>{{repo.full_name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="panel panel-tomato">
+    <div class="panel-heading text-center"><span>Repository Watch</span></div>
+    <div class="panel-body">
+      <table st-table="reposFromGithubData2" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Remove From Watch</th>
+            <th>Repository				</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="repo in watchingUserRepoIds">
+            <td> 
+              <input type="button" value="Remove" ng-click="addRepoToWatch(repo)" class="btn btn-tomato"/>
+            </td>
+            <td>{{repo.full_name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Main component for a primary marketing message or call to action-->
+<!-- /container-->
+<!-- Bootstrap core JavaScript-->
+<!-- ==================================================-->

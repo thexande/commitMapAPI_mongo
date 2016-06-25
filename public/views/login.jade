@@ -1,0 +1,33 @@
+html( lang="en" ng-app="commitMap" )
+	head
+	link(href="/css/login-overrides.css" rel="stylesheet")
+	link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet")
+	body( ui-view="" )
+		.container
+			.row.vertical-offset-100
+				.col-md-5.col-md-offset-3
+					.panel.panel-default
+						.panel-heading.text-center
+							div.panel-title 
+								h1 commitMap
+
+						.panel-body.text-center
+							img(src='http://alexmurphy.me/img/git_map_pin_320x320.png')
+
+							h5	Integrating with the GitHub API, commitMap allows JS developers to view git commit history based on geo location.
+
+							form(accept-charset='UTF-8', role='form')
+								fieldset
+									.form-group
+										input.form-control(placeholder='E-mail', name='email', type='text')
+									.form-group
+										input.form-control(placeholder='Password', name='password', type='password', value='')
+									.checkbox
+										label
+											input(name='remember', type='checkbox', value='Remember Me')
+											|  Remember Me
+									input.btn.btn-lg.btn-tomato.btn-block(type='button', value='Login')
+
+							a.btn.btn-danger.btn-xlarge( ng-click="GitHubAuth('github')" ) 
+								span.fa.fa-github
+									h4 Sign in with Github

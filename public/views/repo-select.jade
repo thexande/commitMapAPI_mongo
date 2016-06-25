@@ -1,0 +1,49 @@
+<br /><br /><br /><br />
+legend.text-center 
+	h3 Select repositories to add to your watch list!
+.col-md-6
+	.panel.panel-tomato
+		.panel-heading.text-center
+			span Repositories available
+		.panel-body
+			.panel-body
+				table.table.table-striped.table-bordered(st-table='reposFromGithubData')
+					thead
+						//- input.form-control(st-search='' placeholder='global search ...' type='text')
+						tr
+							th Add To Watch
+							th Repository				
+					tbody
+						tr(ng-repeat='repo in availableUserRepoIds')
+							td 
+								input(type="button" class="btn btn-tomato" value="Add" ng-click="addRepoToWatch(repo)")
+							td {{repo.full_name}}
+.col-md-6
+	.panel.panel-tomato
+		.panel-heading.text-center
+			span Repository Watch
+		.panel-body
+			table.table.table-striped.table-bordered(st-table='reposFromGithubData2')
+				thead
+					//- input.form-control(st-search='' placeholder='global search ...' type='text')
+					tr
+						th Remove From Watch
+						th Repository				
+				tbody
+					tr(ng-repeat='repo in watchingUserRepoIds')
+						td 
+							input(type="button" class="btn btn-tomato" value="Remove" ng-click="addRepoToWatch(repo)")
+						td {{repo.full_name}}
+
+// Main component for a primary marketing message or call to action
+//- .jumbotron
+//- 	h1 Navbar example
+//- 	p
+//- 		| This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.
+//- 	p To see the difference between static and fixed top navbars, just scroll.
+//- 	p
+//- 		a.btn.btn-lg.btn-primary(href='../../components/#navbar', role='button') View navbar docs &raquo;
+// /container
+
+// Bootstrap core JavaScript
+// ==================================================

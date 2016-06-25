@@ -1,0 +1,41 @@
+
+<html lang="en" ng-app="commitMap">
+  <head></head>
+  <link href="/css/login-overrides.css" rel="stylesheet"/>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+  <body ui-view="">
+    <div class="container">
+      <div class="row vertical-offset-100">
+        <div class="col-md-5 col-md-offset-3">
+          <div class="panel panel-default">
+            <div class="panel-heading text-center">
+              <div class="panel-title"> 
+                <h1>commitMap</h1>
+              </div>
+            </div>
+            <div class="panel-body text-center"><img src="http://alexmurphy.me/img/git_map_pin_320x320.png"/>
+              <h5>	Integrating with the GitHub API, commitMap allows JS developers to view git commit history based on geo location.</h5>
+              <form accept-charset="UTF-8" role="form">
+                <fieldset>
+                  <div class="form-group">
+                    <input placeholder="E-mail" name="email" type="text" class="form-control"/>
+                  </div>
+                  <div class="form-group">
+                    <input placeholder="Password" name="password" type="password" value="" class="form-control"/>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input name="remember" type="checkbox" value="Remember Me"/> Remember Me
+                    </label>
+                  </div>
+                  <input type="button" value="Login" class="btn btn-lg btn-tomato btn-block"/>
+                </fieldset>
+              </form><a ng-click="GitHubAuth('github')" class="btn btn-danger btn-xlarge"> <span class="fa fa-github">
+                  <h4>Sign in with Github</h4></span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

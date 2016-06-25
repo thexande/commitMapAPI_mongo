@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="commitMap">
+  <head>
+    <title>commitMap Dash</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Baking Bootstrap Snippets with Jade">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/cyborg/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <link href="/css/dash-overrides.css" rel="stylesheet">
+  <body ng-app="commitMap">
+    <!-- Fixed navbar-->
+    <div role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar-header">
+        <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">commitMap</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a ui-sref="dash.home">Dashboard</a></li>
+          <li><a ui-sref="dash.repoSelect">Repo Watch</a></li>
+          <li><a ui-sref="#">Activity Feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div ui-view="" class="container"></div>
+  </body>
+</html>

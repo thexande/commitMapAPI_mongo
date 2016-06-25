@@ -1,0 +1,65 @@
+<br /><br /><br /><br />
+legend.text-center 
+	h3 Welcome to the commitMap Dashboard!
+.col-md-6
+	.panel.panel-tomato
+		.panel-heading.text-center
+			h5 Github Profile Informaton
+		.panel-body
+			.panel-body
+				.row
+					.col-md-3.col-lg-3(align='center')
+						img.img-circle(src='{{profileData.avatar_url}}', name='aboutme', width='200', height='200')
+						legend.text-center {{profileData.name}}
+					table.table.table-striped
+						tbody
+							tr
+								td Username
+								td {{profileData.login}}
+							tr
+								td Blog URL
+								td {{profileData.blog}}
+							//- tr
+							//- 	td Bio
+							//- 	td {{profileData.bio}}
+							//- tr
+							//- 	td Company
+							//- 	td {{profileData.company}}
+							//- tr
+							//- 	td Email
+							//- 	td {{profileData.email}}
+							tr
+								td Hireable
+								td {{profileData.hireable}}
+							tr
+								td Location
+								td {{profileData.location}}
+							tr
+								td Followers
+								td {{profileData.followers}}
+							tr
+								td Following
+								td {{profileData.following}}
+							tr
+								td Following
+								td {{profileData.following}}
+
+.col-md-6
+	.panel.panel-tomato
+		.panel-heading.text-center
+			h4 API access key
+		.panel-body
+			h5 this is the content
+
+// Main component for a primary marketing message or call to action
+//- .jumbotron
+//- 	h1 Navbar example
+//- 	p
+//- 		| This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.
+//- 	p To see the difference between static and fixed top navbars, just scroll.
+//- 	p
+//- 		a.btn.btn-lg.btn-primary(href='../../components/#navbar', role='button') View navbar docs &raquo;
+// /container
+
+// Bootstrap core JavaScript
+// ==================================================
