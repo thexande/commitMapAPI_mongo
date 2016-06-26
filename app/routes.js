@@ -11,14 +11,14 @@ var githubUserModel = require('./models/github_user')
 
 // github api access configuration
 var github = new gitHubApi({
-    debug: true,
-    protocol: "https",
-    host: "api.github.com",
-    timeout: 5000,
-    headers: {
-        "user-agent": "commitMap"
-    },
-    followRedirects: false,
+  debug: true,
+  protocol: "https",
+  host: "api.github.com",
+  timeout: 5000,
+  headers: {
+    "user-agent": "commitMap"
+  },
+  followRedirects: false,
 })
 
 // SPA route
@@ -65,58 +65,33 @@ router.route('/githubUser')
             token: accessToken.access_token
           })
           github.repos.getAll({}, function(err, githubRepoResponse) {
-            // TODO filter out user selected repos before appending to databaseConfig
             var newUser = {}
             newUser.profileInformation = profile
             newUser.userAvailableRepos = githubRepoResponse
+              // TODO filter out user selected repos before appending to databaseConfig
+
             newUser.profileInformation.bearer_token = accessToken.access_token
             githubUserModel.findOneAndUpdate({
-              'profileInformation.id' : profile.id
-            }, newUser, {upsert: true},
-            (error, document) => {
-              console.log(document);
-            })
-
-            // (err, githubUserFromDb) => {
-            //   // does our user collection already exist?
-            //   if(githubUserFromDb.length > 0){
-            //     // user collection exists. update token
-            //     console.log(githubUserFromDb[0].profileInformation);
-            //     githubUserFromDb[0].profileInformation.test = 'accessToken.access_token'
-            //     githubUserFromDb[0].save((e) => {console.log(e)})
-            //   } else {
-            //     // user colleciton does not exist. create user with available repos and profile data
-            //     var githubUser = new githubUserModel()
-            //     githubUser.profileInformation = profile
-            //     githubUser.profileInformation.bearer_token = accessToken.access_token
-            //     githubUser.userAvailableRepos = response
-            //     githubUser.save((e) => {console.log(e)})
-            //
-            //   }
-            //   console.log(err);
-            // })
-
-            //
-            // githubUserModel.findOrCreate({
-            //   profileInformation: profile,
-            //   userAvailableRepos: response
-            // })
-
-            // save user to db.
-
+                'profileInformation.id': profile.id
+              }, newUser, {
+                upsert: true
+              },
+              (error, updatedUser) => {
+                console.log(updatedUser);
+                // return user collection
+                res.json(updatedUser)
+              })
           })
-          // return user collection
-          res.send('gitHubUser')
         })
       })
+    })
+  // route to return user collection
+  .get((req, res) => {
+    console.log(req.query.access_token);
+    githubUserModel.find({
+      'profileInformation.bearer_token': req.query.access_token
+    }, (err, userCollection) => {
+      res.json(userCollection)
+    })
   })
-  // .get(function(req, res) {
-  //   githubUserModel.find(function(err, bears) {
-  //       if (err)
-  //           res.send(err);
-  //
-  //       res.json(bears);
-  //   });
-// });
-
 module.exports = router

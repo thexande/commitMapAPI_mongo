@@ -12,36 +12,37 @@ angular.module('commitMap.controllers', [])
       $auth.authenticate(provider)
         .catch((e) => {console.log(e)})
         .then((response) => {
+          console.log("##################LOGIN RESPONSE HERE########################");
           console.log(response)
           // get user data
-          userFactory.getUserWithToken(response.data.token.access_token)
-          .then((response2) => {
-            // console.log(response2);
-            userFactory.setToLocalStorage('userProfile', response2.data)
-            userFactory.setToLocalStorage('bearer_token', response2.data.bearer_token)
-            // get available repo data and store in factory
-            userFactory.getAvailableUserRepos(response.data.token.access_token)
-              .catch((e) => {console.log(e)})
-              .then((res) => {
-                // console.log(res)
-                // assign scope var for available repo ids
-                $scope.availableUserRepoIds = res.data
-                userFactory.setToLocalStorage('availableUserRepoIds', $scope.availableUserRepoIds)
-                // get Latest repos from github
-              })
-              // get user watching repos
-              userFactory.getWatchedUserRepos(response.data.token.access_token)
-                .then((res) => {
-                  console.log("########## watching res here #########3");
-                  console.log(res);
-                  userFactory.setToLocalStorage('watchingUserRepos', JSON.parse(res.data.selected_repos))
-                })
-              // userFactory.getReposFromGitHub(response.data.token.access_token).then((res) => {
-              //   userFactory.setToLocalStorage('currentReposFromGithub', res.data)
-              // })
-            // load user dash home
-            $state.transitionTo('dash.home')
-          })
+          // userFactory.getUserWithToken(response.data.token.access_token)
+          // .then((response2) => {
+          //   // console.log(response2);
+          //   userFactory.setToLocalStorage('userProfile', response2.data)
+          //   userFactory.setToLocalStorage('bearer_token', response2.data.bearer_token)
+          //   // get available repo data and store in factory
+          //   userFactory.getAvailableUserRepos(response.data.token.access_token)
+          //     .catch((e) => {console.log(e)})
+          //     .then((res) => {
+          //       // console.log(res)
+          //       // assign scope var for available repo ids
+          //       $scope.availableUserRepoIds = res.data
+          //       userFactory.setToLocalStorage('availableUserRepoIds', $scope.availableUserRepoIds)
+          //       // get Latest repos from github
+          //     })
+          //     // get user watching repos
+          //     userFactory.getWatchedUserRepos(response.data.token.access_token)
+          //       .then((res) => {
+          //         console.log("########## watching res here #########3");
+          //         console.log(res);
+          //         userFactory.setToLocalStorage('watchingUserRepos', JSON.parse(res.data.selected_repos))
+          //       })
+          //     // userFactory.getReposFromGitHub(response.data.token.access_token).then((res) => {
+          //     //   userFactory.setToLocalStorage('currentReposFromGithub', res.data)
+          //     // })
+          //   // load user dash home
+          //   $state.transitionTo('dash.home')
+          // })
         })
     }
 
