@@ -14,7 +14,7 @@ legend.text-center
 							th Add To Watch
 							th Repository				
 					tbody
-						tr(ng-repeat='repo in availableUserRepoIds')
+						tr(ng-repeat='repo in availableUserRepos')
 							td 
 								input(type="button" class="btn btn-tomato" value="Add" ng-click="addRepoToWatch(repo)")
 							td {{repo.full_name}}
@@ -30,9 +30,9 @@ legend.text-center
 						th Remove From Watch
 						th Repository				
 				tbody
-					tr(ng-repeat='repo in watchingUserRepoIds')
+					tr(ng-repeat='repo in watchingUserRepos')
 						td 
-							input(type="button" class="btn btn-tomato" value="Remove" ng-click="addRepoToWatch(repo)")
+							input(type="button" class="btn btn-tomato" value="Remove" ng-click="removeRepoFromWatch(repo)")
 						td {{repo.full_name}}
 
 // Main component for a primary marketing message or call to action

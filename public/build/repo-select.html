@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="repo in availableUserRepoIds">
+            <tr ng-repeat="repo in availableUserRepos">
               <td> 
                 <input type="button" value="Add" ng-click="addRepoToWatch(repo)" class="btn btn-tomato"/>
               </td>
@@ -39,9 +39,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="repo in watchingUserRepoIds">
+          <tr ng-repeat="repo in watchingUserRepos">
             <td> 
-              <input type="button" value="Remove" ng-click="addRepoToWatch(repo)" class="btn btn-tomato"/>
+              <input type="button" value="Remove" ng-click="removeRepoFromWatch(repo)" class="btn btn-tomato"/>
             </td>
             <td>{{repo.full_name}}</td>
           </tr>

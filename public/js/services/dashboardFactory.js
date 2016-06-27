@@ -20,61 +20,30 @@ angular.module('commitMap.services', [])
         data: {token: passedToken}
       })
     },
-    getAvailableUserRepos : (passedToken) => {
-      return $http({
-        url: '/userAvailableRepos',
-        method: "GET",
-        params: {access_token: passedToken}
-      })
-    },
-    // setAvailableUserRepos : (repoId) => {
-    //   return $http({
-    //     url: '/getReposFromGitHub',
-    //     method: "POST",
-    //     data: {
-    //       access_token: this.getFromLocalStorage('bearer_token'),
-    //       selected_repo_id : repoId
-    //     }
-    //   })
-    // },
-
-    // watched user repo methods
-    getWatchedUserRepos : (passedToken) => {
-      return $http({
-        url: '/userWatchedRepos',
-        method: "GET",
-        params: {access_token: passedToken}
-      })
-    },
     addToWatchedUserRepos : (repo) => {
       return $http({
-        url: '/userWatchedRepos',
-        method: "POST",
+        url: '/githubUser/userWatchingRepo/'+repo,
+        method: "PUT",
         data: {
-          access_token: localStorageService.get('bearer_token'),
-          selected_repo : repo
+          access_token: (localStorageService.get('userProfile').bearer_token)
         }
       })
     },
     removeFromWatchedUserRepos : (repo) => {
       return $http({
-        url: '/removeFromWatchedUserRepos',
+        url: '/githubUser/userWatchingRepo/'+repo,
         method: "POST",
         data: {
-          access_token: localStorageService.get('bearer_token'),
-          selected_repo: repo
+          access_token: (localStorageService.get('userProfile').bearer_token)
         }
       })
     },
-
-
-
     getUserWithToken : (token) => {
       $http.defaults.headers.get = {'authorization': ''}
       $http.defaults.headers.get = {'Authorization': ''}
       // fetch profile data and store in factory.
       return $http({
-        url: '/userData',
+        url: '/githubUser',
         method: "GET",
         headers: {
           Accept: "*/*",

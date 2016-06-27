@@ -79,8 +79,13 @@ router.route('/githubUser')
                 upsert: true
               },
               (error, updatedUser) => {
-                // return user collection
-                res.json(updatedUser)
+                // now find and return latest record
+                githubUserModel.findOne({
+                  'profileInformation.id': updatedUser.profileInformation.id
+                }, (err, user) => {
+                  // return user collection
+                  res.json(user)
+                })
               })
           })
         })
@@ -88,6 +93,9 @@ router.route('/githubUser')
     })
     // route to return user collection
     .get((req, res, next) => {
+      // set auth headers to '' to avoid angular additons
+      req.headers.Authorization = ''
+      req.headers.authorization = ''
       next()
     }, passport.authenticate('bearer', {session: false}),
     (req, res) => {
@@ -98,6 +106,9 @@ router.route('/githubUser')
 router.route('/githubUser/userWatchingRepo/:repoId')
   // put route to update watchingRepos
   .put((req, res, next) => {
+    // set auth headers to '' to avoid angular additons
+    req.headers.Authorization = ''
+    req.headers.authorization = ''
     next()
   }, passport.authenticate('bearer', {session: false}),
   (req, res) => {
@@ -124,7 +135,11 @@ router.route('/githubUser/userWatchingRepo/:repoId')
     })
   })
   // DELETE route to remove repo from user watching arr and return to user available.
-  .delete((req, res, next) => {
+  .post((req, res, next) => {
+    // set auth headers to '' to avoid angular additons
+    req.headers.Authorization = ''
+    req.headers.authorization = ''
+    console.log(req);
     next()
   },
   passport.authenticate('bearer', {session: false}),
