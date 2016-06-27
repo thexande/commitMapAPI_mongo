@@ -39,9 +39,9 @@ router.route('/githubUser')
       code: req.body.code,
       client_id: req.body.clientId,
       // commitMapHerokuSatelizer
-      // client_secret: 'c1a1a683761b250ba2679109f7c2aad51ef02d99',
+      client_secret: 'c1a1a683761b250ba2679109f7c2aad51ef02d99',
       // commitMapSatelizer
-      client_secret: '9b4d0ef16b573cc1c714097ae5e26899085d5d9c',
+      // client_secret: '9b4d0ef16b573cc1c714097ae5e26899085d5d9c',
       redirect_uri: req.body.redirectUri
     }
     request.get({
@@ -76,9 +76,14 @@ router.route('/githubUser')
             githubUserModel.findOneAndUpdate({
                 'profileInformation.id': profile.id
               }, newUser, {
-                upsert: true
+                upsert: true,
+                new: true,
+                returnNewDocument: true
               },
               (error, updatedUser) => {
+                console.log("########UPDATED USER###############");
+                console.log(updatedUser.profileInformation);
+
                 // now find and return latest record
                 githubUserModel.findOne({
                   'profileInformation.id': updatedUser.profileInformation.id
@@ -167,6 +172,5 @@ router.route('/githubUser/userWatchingRepo/:repoId')
       res.send(userCollection)
     })
   })
-
 
 module.exports = router
