@@ -30,9 +30,9 @@ commitMap.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     // clientId: 'ac835acb2e86b1f6f916',
     authorizationEndpoint: 'https://github.com/login/oauth/authorize',
     // heroku
-    // redirectUri: 'http://www.commitmap.com/#/dash',
+    redirectUri: 'http://www.commitmap.com/#/dash',
     // localhost
-    redirectUri: 'http://localhost:3000/#/dash',
+    // redirectUri: 'http://localhost:3000/#/dash',
     optionalUrlParams: ['scope'],
     scope: ['user:email', 'read:repo_hook', 'write:repo_hook'],
     scopeDelimiter: ' ',
