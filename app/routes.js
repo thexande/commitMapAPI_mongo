@@ -1,5 +1,6 @@
 // our router file for our API
 var express = require('express')
+var passport = require('passport')
 router = express.Router()
 var path = require('path')
 var gitHubApi = require('github')
@@ -77,7 +78,6 @@ router.route('/githubUser')
                 upsert: true
               },
               (error, updatedUser) => {
-                console.log(updatedUser);
                 // return user collection
                 res.json(updatedUser)
               })
@@ -86,12 +86,12 @@ router.route('/githubUser')
       })
     })
   // route to return user collection
-  .get((req, res) => {
-    console.log(req.query.access_token);
-    githubUserModel.find({
-      'profileInformation.bearer_token': req.query.access_token
-    }, (err, userCollection) => {
-      res.json(userCollection)
-    })
+  .get((req, res, next) => {
+    next()
+  }, passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+    res.json(req.user)
   })
+
+  
 module.exports = router

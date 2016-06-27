@@ -1,4 +1,7 @@
 // require all our dependencies
+var passport = require('passport');
+var BearerStrategy = require('passport-http-bearer').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var express = require('express')
 var morgan = require('morgan')
 var bodyParser = require('body-parser')
@@ -19,7 +22,27 @@ app.use(bodyParser.json({
 }))
 app.use(methodOverride('X-HTTP-Method-Override'))
 
+// data models
+var githubUserModel = require('./app/models/github_user')
 
+// bearer token for passport
+passport.use(
+    new BearerStrategy(
+        function(token, done) {
+          console.log("In bearer Strat")
+
+          console.log(token)
+          githubUserModel.find({
+            'profileInformation.bearer_token': token
+          }, (err, userCollection) => {
+            console.log(userCollection);
+            return done(null, userCollection, {
+                scope: 'all'
+            })
+          })
+       }
+    )
+);
 router = require('./app/routes.js')
 app.use('/', router)
 
