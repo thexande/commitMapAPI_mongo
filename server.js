@@ -35,7 +35,6 @@ passport.use(
           githubUserModel.find({
             'profileInformation.bearer_token': token
           }, (err, userCollection) => {
-            console.log(userCollection);
             return done(null, userCollection, {
                 scope: 'all'
             })

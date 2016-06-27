@@ -69,6 +69,7 @@ router.route('/githubUser')
             var newUser = {}
             newUser.profileInformation = profile
             newUser.userAvailableRepos = githubRepoResponse
+            newUser.userWatchingRepos = []
               // TODO filter out user selected repos before appending to databaseConfig
 
             newUser.profileInformation.bearer_token = accessToken.access_token
@@ -85,13 +86,46 @@ router.route('/githubUser')
         })
       })
     })
-  // route to return user collection
-  .get((req, res, next) => {
+    // route to return user collection
+    .get((req, res, next) => {
+      next()
+    }, passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+      res.json(req.user)
+    })
+
+// route to put userWatchingRepos
+router.route('/githubUser/addRepoToWatch/:repoId')
+  // put route to update watchingRepos
+  .put((req, res, next) => {
     next()
   }, passport.authenticate('bearer', {session: false}),
-    (req, res) => {
-    res.json(req.user)
+  (req, res) => {
+    // find our user collection
+    githubUserModel.findOne({
+      'profileInformation.id': req.user[0].profileInformation.id
+    }, (err, userCollection) => {
+      // now push repo with id to userWatchingRepos and remove from userAvailableRepos
+      var selectedRepoId = req.params.repoId
+      // new userAvailableRepos array
+      userAvailableReposWithoutSelected = userCollection.userAvailableRepos.filter((i) => {
+        return i.id != selectedRepoId
+      })
+      // push selectedRepo into userSelectedRepos
+      // userCollection.userWatchingRepos.push()
+      var repoSelected = userCollection.userAvailableRepos.filter((i) => {
+        return i.id == selectedRepoId
+      })[0]
+
+      // assign our new arrays and save
+      userCollection.userAvailableRepos = userAvailableReposWithoutSelected
+      userCollection.userWatchingRepos.push(repoSelected)
+      userCollection.save()
+
+      res.send(userCollection)
+    })
+
   })
 
-  
+
 module.exports = router
