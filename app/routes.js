@@ -95,7 +95,7 @@ router.route('/githubUser')
     })
 
 // route to put userWatchingRepos
-router.route('/githubUser/addRepoToWatch/:repoId')
+router.route('/githubUser/userWatchingRepo/:repoId')
   // put route to update watchingRepos
   .put((req, res, next) => {
     next()
@@ -112,11 +112,9 @@ router.route('/githubUser/addRepoToWatch/:repoId')
         return i.id != selectedRepoId
       })
       // push selectedRepo into userSelectedRepos
-      // userCollection.userWatchingRepos.push()
-      var repoSelected = userCollection.userAvailableRepos.filter((i) => {
-        return i.id == selectedRepoId
+      var repoSelected = userCollection.userAvailableRepos.filter((i2) => {
+        return i2.id == selectedRepoId
       })[0]
-
       // assign our new arrays and save
       userCollection.userAvailableRepos = userAvailableReposWithoutSelected
       userCollection.userWatchingRepos.push(repoSelected)
@@ -124,7 +122,35 @@ router.route('/githubUser/addRepoToWatch/:repoId')
 
       res.send(userCollection)
     })
-
+  })
+  // DELETE route to remove repo from user watching arr and return to user available.
+  .delete((req, res, next) => {
+    next()
+  },
+  passport.authenticate('bearer', {session: false}),
+  (req, res) => {
+    // find our user collection
+    githubUserModel.findOne({
+      'profileInformation.id': req.user[0].profileInformation.id
+    }, (err, userCollection) => {
+      // remove selectedRepo from watchingRepos and return to availableRepos
+      var watchingRepoId = req.params.repoId
+      var repoSelected = userCollection.userWatchingRepos.filter((i3) => {
+        if(i3 == null){return} else {
+          return i3.id == watchingRepoId
+        }
+      })[0]
+      var updatedUserWatchingRepos = userCollection.userWatchingRepos.filter((i4) => {
+        if(i4 == null){return} else {
+          return i4.id != watchingRepoId
+        }
+      })
+      userCollection.userAvailableRepos.push(repoSelected)
+      userCollection.userWatchingRepos = updatedUserWatchingRepos
+      // save and send
+      userCollection.save()
+      res.send(userCollection)
+    })
   })
 
 

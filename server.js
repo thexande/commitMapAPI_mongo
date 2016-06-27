@@ -35,6 +35,10 @@ passport.use(
           githubUserModel.find({
             'profileInformation.bearer_token': token
           }, (err, userCollection) => {
+            if(userCollection.length == 0){
+              // no user found with token.
+              return(done(null, false))
+            }
             return done(null, userCollection, {
                 scope: 'all'
             })
