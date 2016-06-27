@@ -149,7 +149,7 @@ router.route('/githubUser/userWatchingRepo/:repoId')
   },
   passport.authenticate('bearer', {session: false}),
   (req, res) => {
-    // find our user collection
+    // find our user collections
     githubUserModel.findOne({
       'profileInformation.id': req.user[0].profileInformation.id
     }, (err, userCollection) => {
