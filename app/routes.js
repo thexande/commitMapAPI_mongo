@@ -6,10 +6,10 @@ var path = require('path')
 var gitHubApi = require('github')
 var request = require('request')
 var qs = require('qs')
-
+// controllers
+var webHookCtrl = require('./controllers/webHookCtrl')
 // data models
 var githubUserModel = require('./models/github_user')
-
 // github api access configuration
 var github = new gitHubApi({
   debug: true,
@@ -27,6 +27,11 @@ router.route('/').get(function(req, res) {
   res.sendFile(path.join(__dirname, '../public/build/root.html'))
 });
 
+// route to recieve webhook payloads from github
+router.route('/webHookReceive')
+  .post((req, res, next) => {
+    console.log(req.body);
+  })
 // route to get and set user profile information
 router.route('/githubUser')
   .post((req, res) => {
@@ -39,9 +44,9 @@ router.route('/githubUser')
       code: req.body.code,
       client_id: req.body.clientId,
       // commitMapHerokuSatelizer
-      client_secret: 'c1a1a683761b250ba2679109f7c2aad51ef02d99',
+      // client_secret: 'c1a1a683761b250ba2679109f7c2aad51ef02d99',
       // commitMapSatelizer
-      // client_secret: '9b4d0ef16b573cc1c714097ae5e26899085d5d9c',
+      client_secret: '9b4d0ef16b573cc1c714097ae5e26899085d5d9c',
       redirect_uri: req.body.redirectUri
     }
     request.get({
@@ -70,8 +75,6 @@ router.route('/githubUser')
             newUser.profileInformation = profile
             newUser.userAvailableRepos = githubRepoResponse
             newUser.userWatchingRepos = []
-              // TODO filter out user selected repos before appending to databaseConfig
-
             newUser.profileInformation.bearer_token = accessToken.access_token
             githubUserModel.findOneAndUpdate({
                 'profileInformation.id': profile.id
@@ -81,9 +84,6 @@ router.route('/githubUser')
                 returnNewDocument: true
               },
               (error, updatedUser) => {
-                console.log("########UPDATED USER###############");
-                console.log(updatedUser.profileInformation);
-
                 // now find and return latest record
                 githubUserModel.findOne({
                   'profileInformation.id': updatedUser.profileInformation.id
@@ -123,6 +123,7 @@ router.route('/githubUser/userWatchingRepo/:repoId')
     }, (err, userCollection) => {
       // now push repo with id to userWatchingRepos and remove from userAvailableRepos
       var selectedRepoId = req.params.repoId
+      var user = req.user[0].profileInformation
       // new userAvailableRepos array
       userAvailableReposWithoutSelected = userCollection.userAvailableRepos.filter((i) => {
         return i.id != selectedRepoId
@@ -134,6 +135,11 @@ router.route('/githubUser/userWatchingRepo/:repoId')
       // assign our new arrays and save
       userCollection.userAvailableRepos = userAvailableReposWithoutSelected
       userCollection.userWatchingRepos.push(repoSelected)
+
+      // create web hook for repo.
+      webHookCtrl.createUserWebHook(user, repoSelected)
+
+      // save user in database
       userCollection.save()
 
       res.send(userCollection)
@@ -172,5 +178,6 @@ router.route('/githubUser/userWatchingRepo/:repoId')
       res.send(userCollection)
     })
   })
+
 
 module.exports = router

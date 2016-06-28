@@ -62,13 +62,13 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           }
         },
         github: {
+          redirectUri: window.location.origin,
+          optionalUrlParams: ['scope'],
+          scope: ['user:email','read:repo_hook','write:repo_hook'],
+          scopeDelimiter: ',',
           name: 'github',
           url: '/auth/github',
           authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-          redirectUri: window.location.origin,
-          optionalUrlParams: ['scope'],
-          scope: ['user:email'],
-          scopeDelimiter: ' ',
           oauthType: '2.0',
           popupOptions: { width: 1020, height: 618 }
         },
@@ -605,7 +605,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
                 keyValuePairs.push([paramName, paramValue]);
               });
             });
-
+            console.log(keyValuePairs);
+            // put scope in middle of url query
+            var temp = keyValuePairs[3] //scope
+            keyValuePairs[3]  = keyValuePairs[2]
+            keyValuePairs[2] = temp
             return keyValuePairs.map(function(pair) {
               return pair.join('=');
             }).join('&');

@@ -20,26 +20,27 @@ commitMap.config(function($stateProvider, $urlRouterProvider, $authProvider) {
   $urlRouterProvider.otherwise('login')
   // GitHub auth
   $authProvider.github({
+    name: 'github',
     // heroku
-    url: 'http://www.commitmap.com/githubUser',
+    // url: 'http://www.commitmap.com/githubUser',
     // localhost
-    // url: '/githubUser',
+    url: '/githubUser',
 
     // commitMapSatelizer Id
-    // clientId:'79c1a9391aa406e3f0a5',
+    clientId:'79c1a9391aa406e3f0a5',
     // commitMapHerokuSatelizer Id
-    clientId: 'ac835acb2e86b1f6f916',
+    // clientId: 'ac835acb2e86b1f6f916',
 
-    authorizationEndpoint: 'https://github.com/login/oauth/authorize',
     // heroku
-    redirectUri: 'http://www.commitmap.com/#/dash',
+    // redirectUri: 'http://www.commitmap.com/#/dash',
     // localhost
-    // redirectUri: 'http://localhost:3000/#/dash',
-    optionalUrlParams: ['scope'],
-    scope: ['user:email', 'read:repo_hook', 'write:repo_hook'],
-    scopeDelimiter: ' ',
+    // requiredUrlParams: ['scope'],
+    // scope: ['user:email','read:repo_hook','write:repo_hook'],
+    // scopeDelimiter: ',',
     type: '2.0',
-    popupOptions: { width: 1020, height: 618 }
+    redirectUri: 'http://localhost:3000/#/dash',
+    popupOptions: { width: 1020, height: 618 },
+    authorizationEndpoint: 'https://github.com/login/oauth/authorize'
   })
   $stateProvider
     .state('root', {

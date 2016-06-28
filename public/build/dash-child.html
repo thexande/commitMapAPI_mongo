@@ -1,11 +1,21 @@
-<br /><br /><br /><br />
+<br /><br />
 <legend class="text-center"> 
   <h3>Welcome to the commitMap Dashboard!</h3>
+  <div ng-show="!isUserWatchingRepos">
+    <div class="jumbotron">
+      <h1>Your repository watch list is empty!</h1>
+      <p></p>In order for commitMap to work correctly, you need to add a repository to your watchlist.
+      <p>Click the button below to add one of your repositories to your commitMap watchlist!</p>
+      <p></p><a href="../../components/#navbar" role="button" class="btn btn-lg btn-tomato">Add A Repo To Watch</a>
+    </div>
+  </div>
 </legend>
 <div class="col-md-6">
   <div class="panel panel-tomato">
     <div class="panel-heading text-center">
       <h5>Profile</h5>
+      <button class="btn btn-default pull-right btn-large">Edit</button>
+      <div class="clearfix"></div>
     </div>
     <div class="panel-body">
       <div class="panel-body">
