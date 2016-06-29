@@ -30,8 +30,13 @@ router.route('/').get(function(req, res) {
 // route to recieve webhook payloads from github
 router.route('/webHookReceive')
   .post((req, res, next) => {
-    console.log(req.body);
+    githubUserModel.update({
+      'profileInformation.login': req.body.pusher.name,
+      'userWatchingRepos':  {$elemMatch : {'name' : req.body.repository.name}}},
+   {$push: {'userWatchingRepos.$.webHookEvents': req.body}})
+   res.sendStatus(200)
   })
+
 // route to get and set user profile information
 router.route('/githubUser')
   .post((req, res) => {
