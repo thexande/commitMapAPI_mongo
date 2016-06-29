@@ -192,7 +192,7 @@ router.route('/githubUser/userWatchingRepo/:repoId')
       var hookId = repoSelected.webHookData.hook_id.toString()
       // remove web hook from github and mark hook in DB as inactive.
       webHookCtrl.removeUserWebHook(user, repoName, hookId)
-      // set hook status to inactive in DB
+      // set hook status to inactive in DB 
       repoSelected.webHookData.active = false
       userCollection.userAvailableRepos.push(repoSelected)
       userCollection.userWatchingRepos = updatedUserWatchingRepos
