@@ -34,6 +34,7 @@ router.route('/webHookReceive')
       'profileInformation.login': req.body.pusher.name,
       'userWatchingRepos':  {$elemMatch : {'name' : req.body.repository.name}}},
    {$push: {'userWatchingRepos.$.webHookEvents': req.body}})
+   .catch((e) => {console.log(e);})
    res.sendStatus(200)
   })
 
