@@ -20,7 +20,7 @@ module.exports = {
       type: "oauth",
       token: user.bearer_token
     })
-    // attempt to create webhook.
+    // attempt to create webhook on github.
     console.log(user.login);
     console.log(repo.name);
 
@@ -39,7 +39,7 @@ module.exports = {
     })
   },
   removeUserWebHook : (user, repo) => {
-    
+
   }
 
 }
