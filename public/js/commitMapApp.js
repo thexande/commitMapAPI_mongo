@@ -25,18 +25,9 @@ commitMap.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     // url: 'http://www.commitmap.com/githubUser',
     // localhost
     url: '/githubUser',
-
     // commitMapSatelizer Id
     clientId:'79c1a9391aa406e3f0a5',
-    // commitMapHerokuSatelizer Id
-    // clientId: 'ac835acb2e86b1f6f916',
 
-    // heroku
-    // redirectUri: 'http://www.commitmap.com/#/dash',
-    // localhost
-    // requiredUrlParams: ['scope'],
-    // scope: ['user:email','read:repo_hook','write:repo_hook'],
-    // scopeDelimiter: ',',
     type: '2.0',
     redirectUri: 'http://localhost:3000/#/dash',
     popupOptions: { width: 1020, height: 618 },
@@ -61,6 +52,11 @@ commitMap.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       url: '/reposelect',
       templateUrl: 'build/repo-select.html',
       controller: 'repoSelectController'
+    })
+    .state('dash.activity', {
+      url: '/activity',
+      templateUrl: 'build/activity.html',
+      controller: 'activityController'
     })
     .state('dash.home', {
       url: '/home',

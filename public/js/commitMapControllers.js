@@ -8,16 +8,11 @@ angular.module('commitMap.controllers', [])
         .then((response) => {
           console.log("##################LOGIN RESPONSE HERE########################");
           console.log(response)
-
             userFactory.setToLocalStorage('userProfile', response.data.profileInformation)
             userFactory.setToLocalStorage('availableUserRepos', response.data.userAvailableRepos)
             userFactory.setToLocalStorage('watchingUserRepos', response.data.userWatchingRepos)
-
-
-
-          //   // load user dash home
+            // load user dash home
             $state.transitionTo('dash.home')
-          // })
         })
     }
 
@@ -44,6 +39,20 @@ angular.module('commitMap.controllers', [])
       $scope.isUserWatchingRepos = false
     }
     console.log($scope.isUserWatchingRepos);
+  })
+  // repository activity controller
+  .controller('activityController', function($scope, $http, $state, userFactory){
+    console.log("in activity controller");
+    var bearerToken = userFactory.getFromLocalStorage('userProfile').bearer_token
+    console.log(bearerToken);
+    userFactory.getUserData(bearerToken)
+      .then((resp) => {
+        console.log(resp);
+      })
+    // userFactory.getUserData(userFactory.getFromLocalStorage('bearer_token'))
+
+    $scope.watchingUserRepos = userFactory.getFromLocalStorage('watchingUserRepos')
+
   })
   // repo select view
   .controller('repoSelectController', function($scope, $http, $state, userFactory){

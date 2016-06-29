@@ -13,11 +13,11 @@ angular.module('commitMap.services', [])
     reposFromGithubData : {},
     repoData : {},
     webHookData : {},
-    getReposFromGitHub : (passedToken) => {
+    getUserData : (passedToken) => {
       return $http({
-        url: '/getReposFromGitHub',
-        method: "POST",
-        data: {token: passedToken}
+        url: '/githubUser',
+        method: "GET",
+        params: {access_token: passedToken}
       })
     },
     addToWatchedUserRepos : (repo) => {

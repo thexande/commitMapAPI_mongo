@@ -11,7 +11,8 @@ module.exports = function(grunt) {
           'public/build/dash.html' : 'public/views/dash.jade',
           'public/build/root.html' : 'public/views/root.jade',
           'public/build/repo-select.html' : 'public/views/repo-select.jade',
-          'public/build/dash-child.html' : 'public/views/dash-child.jade'
+          'public/build/dash-child.html' : 'public/views/dash-child.jade',
+          'public/build/activity.html' : 'public/views/activity.jade'
         }
       }
     },
