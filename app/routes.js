@@ -48,7 +48,7 @@ router.route('/webHookReceive')
    res.sendStatus(200)
   })
 
-// route to get and set user profile information 
+// route to get and set user profile information
 router.route('/githubUser')
   .post((req, res) => {
     var oauthTokenFromSatellizer = req.body
@@ -187,6 +187,13 @@ router.route('/githubUser/userWatchingRepo/:repoId')
           return i4.id != watchingRepoId
         }
       })
+      var user = userCollection.profileInformation.login
+      var repoName = repoSelected.name
+      var hookId = repoSelected.webHookData.hook_id.toString()
+      // remove web hook from github and mark hook in DB as inactive.
+      webHookCtrl.removeUserWebHook(user, repoName, hookId)
+      // set hook status to inactive in DB
+      repoSelected.webHookData.active = false
       userCollection.userAvailableRepos.push(repoSelected)
       userCollection.userWatchingRepos = updatedUserWatchingRepos
       // save and send
@@ -194,6 +201,4 @@ router.route('/githubUser/userWatchingRepo/:repoId')
       res.send(userCollection)
     })
   })
-
-
 module.exports = router

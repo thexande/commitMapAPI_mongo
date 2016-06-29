@@ -30,16 +30,21 @@ module.exports = {
       user: user.login,
       repo: repo.name,
       config: {
-        url: 'https://cd62bf1d.ngrok.io/webHookReceive',
+        url: 'https://fefa4473.ngrok.io/webHookReceive',
         content_type: 'json'
       }
     }, (res) => {
-      console.log(res);
       return res
     })
   },
-  removeUserWebHook : (user, repo) => {
-
+  removeUserWebHook : (user, repo, id) => {
+    github.repos.deleteHook({
+      user: user,
+      repo: repo,
+      id: id
+    }, (res) => {
+      return res;
+    })
   }
 
 }

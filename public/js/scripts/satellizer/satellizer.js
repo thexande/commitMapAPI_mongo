@@ -64,7 +64,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         github: {
           redirectUri: window.location.origin,
           optionalUrlParams: ['scope'],
-          scope: ['user:email','read:repo_hook','write:repo_hook'],
+          scope: ['user:email','read:repo_hook','write:repo_hook','admin:repo_hook'],
           scopeDelimiter: ',',
           name: 'github',
           url: '/auth/github',
