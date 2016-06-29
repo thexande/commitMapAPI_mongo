@@ -15,7 +15,6 @@ module.exports = {
     console.log(userId);
   },
   createUserWebHook: (user, repo) => {
-    console.log("createUserWebHook");
     // authenticate with github
     github.authenticate({
       type: "oauth",
@@ -38,6 +37,9 @@ module.exports = {
       console.log(res);
       return res
     })
+  },
+  removeUserWebHook : (user, repo) => {
+    
   }
 
 }
