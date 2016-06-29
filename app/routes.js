@@ -48,7 +48,7 @@ router.route('/webHookReceive')
    res.sendStatus(200)
   })
 
-// route to get and set user profile information
+// route to get and set user profile information 
 router.route('/githubUser')
   .post((req, res) => {
     var oauthTokenFromSatellizer = req.body
