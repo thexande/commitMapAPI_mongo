@@ -30,18 +30,14 @@ router.route('/').get(function(req, res) {
 // route to recieve webhook payloads from github
 router.route('/webHookReceive')
   .post((req, res, next) => {
-    console.log(req.body);
     // is this the initial webhook payload? if so, store that information, else push to array
-    if(req.body.hook.type === "Repository"){
-      console.log("first hook payload");
+    if(req.body.hook){
       githubUserModel.update({
         'profileInformation.login': req.body.sender.login,
         'userWatchingRepos':  {$elemMatch : {'name' : req.body.repository.name}}},
      {$set: {'userWatchingRepos.$.webHookData': req.body}})
      .catch((e) => {console.log(e);})
    } else {
-     console.log("event hook payload");
-
     //  web hook event. push to preexisting arr
     githubUserModel.update({
       'profileInformation.login': req.body.pusher.name,
